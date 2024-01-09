@@ -197,16 +197,9 @@ export function registerPaste() {
       const {left, top, width, height} = copyWorkspace
         .getMetricsManager()
         .getViewMetrics(true);
-      const viewportRect = new Rect(top, top + height, left, left + width);
-
-      if (viewportRect.contains(copyCoords.x, copyCoords.y)) {
-        // Pass the default copy coordinates when they are inside the viewport.
-        return !!clipboard.paste(copyData, copyWorkspace, copyCoords);
-      } else {
-        // Otherwise paste in the middle of the viewport.
-        const centerCoords = new Coordinate(left + width / 2, top + height / 2);
-        return !!clipboard.paste(copyData, copyWorkspace, centerCoords);
-      }
+      // Otherwise paste in the middle of the viewport.
+      const centerCoords = new Coordinate(left + width / 2, top + height / 2);
+      return !!clipboard.paste(copyData, copyWorkspace, centerCoords);
     },
     keyCodes: [ctrlV, altV, metaV],
   };
